@@ -3,6 +3,7 @@
 #include "json.hpp"
 
 #include <functional>
+#include <iostream>
 #include <string>
 
 using namespace std::placeholders;

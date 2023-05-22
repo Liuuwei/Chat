@@ -451,7 +451,8 @@ src/server/CMakeFiles/ChatServer.dir/ChatServer.cc.o: ../src/server/ChatServer.c
   /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
   /usr/include/c++/11/mutex \
   /usr/include/c++/11/bits/std_mutex.h \
-  /usr/include/c++/11/bits/unique_lock.h
+  /usr/include/c++/11/bits/unique_lock.h \
+  /usr/include/c++/11/iostream
 
 src/server/CMakeFiles/ChatServer.dir/ChatService.cc.o: ../src/server/ChatService.cc \
   /usr/include/stdc-predef.h \
@@ -898,7 +899,8 @@ src/server/CMakeFiles/ChatServer.dir/ChatService.cc.o: ../src/server/ChatService
   /usr/include/c++/11/bits/unique_lock.h \
   ../include/Public.h \
   /usr/include/muduo/base/Logging.h \
-  /usr/include/muduo/base/LogStream.h
+  /usr/include/muduo/base/LogStream.h \
+  /usr/include/c++/11/iostream
 
 src/server/CMakeFiles/ChatServer.dir/db/mysql.cc.o: ../src/server/db/mysql.cc \
   /usr/include/stdc-predef.h \
@@ -3464,9 +3466,9 @@ src/server/CMakeFiles/ChatServer.dir/model/UserModel.cc.o: ../src/server/model/U
 
 /usr/include/c++/11/bits/enable_special_members.h:
 
-/usr/include/c++/11/iostream:
-
 /usr/include/mysql/mysql.h:
+
+/usr/include/c++/11/iostream:
 
 /usr/include/boost/config/workaround.hpp:
 

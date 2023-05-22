@@ -284,13 +284,28 @@ src/client/CMakeFiles/ChatClient.dir/main.cc.o: \
  /home/parallels/video/chat/include/server/model/Group.h \
  /home/parallels/video/chat/include/server/model/GroupUser.h \
  /home/parallels/video/chat/include/server/model/User.h \
- /usr/include/unistd.h /usr/include/aarch64-linux-gnu/bits/posix_opt.h \
+ /usr/include/muduo/base/Timestamp.h /usr/include/muduo/base/copyable.h \
+ /usr/include/muduo/base/Types.h /usr/include/boost/operators.hpp \
+ /usr/include/boost/config.hpp /usr/include/boost/config/user.hpp \
+ /usr/include/boost/config/detail/select_compiler_config.hpp \
+ /usr/include/boost/config/compiler/gcc.hpp \
+ /usr/include/boost/config/detail/select_stdlib_config.hpp \
+ /usr/include/boost/config/stdlib/libstdcpp3.hpp /usr/include/unistd.h \
+ /usr/include/aarch64-linux-gnu/bits/posix_opt.h \
  /usr/include/aarch64-linux-gnu/bits/environments.h \
  /usr/include/aarch64-linux-gnu/bits/confname.h \
  /usr/include/aarch64-linux-gnu/bits/getopt_posix.h \
  /usr/include/aarch64-linux-gnu/bits/getopt_core.h \
  /usr/include/aarch64-linux-gnu/bits/unistd_ext.h \
- /usr/include/linux/close_range.h /usr/include/arpa/inet.h \
+ /usr/include/linux/close_range.h \
+ /usr/include/boost/config/detail/select_platform_config.hpp \
+ /usr/include/boost/config/platform/linux.hpp \
+ /usr/include/boost/config/detail/posix_features.hpp \
+ /usr/include/boost/config/detail/suffix.hpp \
+ /usr/include/boost/config/helper_macros.hpp \
+ /usr/include/boost/detail/workaround.hpp \
+ /usr/include/boost/config/workaround.hpp \
+ /usr/include/boost/core/addressof.hpp /usr/include/arpa/inet.h \
  /usr/include/netinet/in.h /usr/include/aarch64-linux-gnu/sys/socket.h \
  /usr/include/aarch64-linux-gnu/bits/types/struct_iovec.h \
  /usr/include/aarch64-linux-gnu/bits/socket.h \
@@ -306,4 +321,6 @@ src/client/CMakeFiles/ChatClient.dir/main.cc.o: \
  /usr/include/aarch64-linux-gnu/asm/sockios.h \
  /usr/include/asm-generic/sockios.h \
  /usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h \
- /usr/include/aarch64-linux-gnu/bits/in.h
+ /usr/include/aarch64-linux-gnu/bits/in.h /usr/include/c++/11/iostream \
+ /usr/include/c++/11/thread /usr/include/c++/11/bits/std_thread.h \
+ /usr/include/c++/11/bits/this_thread_sleep.h

@@ -1,10 +1,9 @@
 #include "ChatService.h"
 #include "Public.h"
 
-
-
 #include <muduo/base/Logging.h>
 
+#include <iostream>
 #include <vector>
 
 using namespace muduo;
@@ -54,6 +53,9 @@ void ChatService::login(const TcpConnectionPtr &conn, json &js, Timestamp time) 
             }
             response["errno"] = 0;
             // * 更新状态信息
+            response["id"] = id;
+            response["name"] = user.getName();
+            response["time"] = Timestamp::now().toFormattedString();
             user.setState("online");
             userModel_.updateState(user);
 
@@ -63,9 +65,9 @@ void ChatService::login(const TcpConnectionPtr &conn, json &js, Timestamp time) 
 
             if (msgVec.size()) {
                 response["offlinemessage"] = msgVec;
+                std::cout << response.dump() << std::endl;
                 offlineMessageModel_.remove(id);
             }
-
             std::vector<std::string> userVec2;
             if (userVec.size()) {
                 for (auto &user : userVec) {
@@ -77,7 +79,6 @@ void ChatService::login(const TcpConnectionPtr &conn, json &js, Timestamp time) 
                 }
                 response["friend"] = userVec2;
             }
-
             std::vector<std::string> groupStr;
             if (groupVec.size()) {
                 for (auto &group : groupVec) {
@@ -117,7 +118,7 @@ void ChatService::regis(const TcpConnectionPtr &conn, json &js, Timestamp time) 
 }
 
 void ChatService::oneChat(const TcpConnectionPtr &conn, json &js, Timestamp time) {
-    int toId = js["to"].get<int>();
+    int toId = js["toid"].get<int>();
     {
         std::lock_guard lock(connMutex_);
         auto it = userConnectionMap_.find(toId);
