@@ -321,6 +321,10 @@ src/client/CMakeFiles/ChatClient.dir/main.cc.o: \
  /usr/include/aarch64-linux-gnu/asm/sockios.h \
  /usr/include/asm-generic/sockios.h \
  /usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h \
- /usr/include/aarch64-linux-gnu/bits/in.h /usr/include/c++/11/iostream \
- /usr/include/c++/11/thread /usr/include/c++/11/bits/std_thread.h \
+ /usr/include/aarch64-linux-gnu/bits/in.h \
+ /usr/include/c++/11/condition_variable \
+ /usr/include/c++/11/bits/std_mutex.h \
+ /usr/include/c++/11/bits/unique_lock.h /usr/include/c++/11/iostream \
+ /usr/include/c++/11/mutex /usr/include/c++/11/thread \
+ /usr/include/c++/11/bits/std_thread.h \
  /usr/include/c++/11/bits/this_thread_sleep.h

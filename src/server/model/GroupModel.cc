@@ -30,7 +30,7 @@ bool GroupModel::joinGroup(int userId, int groupId, std::string role) {
 // * 加入的所有组，以及组中其他成员的状态
 std::vector<Group> GroupModel::queryGroups(int userId) {
     char sql[1024] = {0};
-    snprintf(sql, sizeof(sql), "select a.id,a.groupname,a.groupdesc from AllGroup a inner join GroupUser b on a.id = b.userid where b.userid = %d", userId);
+    snprintf(sql, sizeof(sql), "select a.id,a.groupname,a.groupdesc from AllGroup a inner join GroupUser b on a.id = b.groupid where b.userid = %d", userId);
     MySQL mysql;
     std::vector<Group> GroupVec;
     

@@ -11,12 +11,17 @@
 #include <arpa/inet.h>
 
 #include <functional>
+#include <condition_variable>
 #include <iostream>
 #include <vector>
+#include <mutex>
 #include <thread>
 
 using json = nlohmann::json;
 using namespace muduo;
+
+std::mutex mutex;
+std::condition_variable cond;
 
 int clientfd;
 
@@ -39,17 +44,29 @@ void regis();
 
 void readFun();
 
+json logjs;
+
+void chat(json &js);
+void showfriend(json &js);
+void showgroup(json &js);
+void showregis(json &js);
+
 void oneChat();
 void addFriend();
 void createGroup();
 void joinGroup();
 void chatGroup();
+void showFriend();
+void showGroup();
 
 std::unordered_map<std::string, std::function<void()>> funMap {
     {"chat", oneChat},
     {"addfriend", addFriend},
-    {"createGroup", createGroup},
-    {"chatgroup", chatGroup}
+    {"joingroup", joinGroup},
+    {"creategroup", createGroup},
+    {"chatgroup", chatGroup},
+    {"showfriend", showFriend},
+    {"showgroup", showGroup}
 };
 
 
@@ -67,6 +84,9 @@ int main() {
     int ret = ::connect(clientfd, (sockaddr *)&addr, sizeof(addr));
     assert(ret != -1);
 
+    std::thread readThread(readFun);
+    readThread.detach();
+
     mainMenu();
 }
 
@@ -79,9 +99,6 @@ void mainMenu() {
         switch(choice) {
             case 1: {
                 if (login()) {
-                    std::thread readThread(readFun);
-                    readThread.detach();
-
                     funMenu();
                 }
                 break;
@@ -103,8 +120,8 @@ void mainMenu() {
 void funMenu() {
     while (true) {
         std::string method;
-        printf("enter:");
         std::cin >> method;
+        std::cin.get();
         auto fun = funMap.find(method);
         if (fun == funMap.end()) {
             printf("again\n");
@@ -127,18 +144,19 @@ bool login() {
     js["password"] = password;
     std::string str = js.dump();
     int len = ::send(clientfd, str.c_str(), str.size(), 0);
+    json res;
 
-    char buf[1024] = {0};
-    len = ::recv(clientfd, buf, sizeof(buf), 0);
-    std::string msg = buf;
-    std::cout << msg << std::endl; //out!
-    json res = json::parse(msg);
-    if (res["errno"] != 0) {
+    {
+        std::unique_lock lock(mutex);
+        cond.wait(lock);
+        res = logjs;
+    }
+    if (res["errno"].get<int>() != 0) {
         printf("%s\n", res["errmsg"].dump().c_str());
         return false;
     } 
     g_currentUser.setId(res["id"].get<int>());
-    g_currentUser.setName(res["name"].dump());
+    g_currentUser.setName(res["name"]);
 
     if (res.contains("friend")) {
         std::vector<std::string> friends = res["friend"];
@@ -173,10 +191,11 @@ void regis() {
     printf("username:");
     std::string name;
     std::getline(std::cin, name);
+    printf("password:");
     std::string password;
     std::cin >> password;
     json js;
-    js["msgid"] = 3;
+    js["msgid"] = REGIS;
     js["name"] = name;
     js["password"] = password;
     send(js);
@@ -199,9 +218,9 @@ void showCurrentUserData(json &js) {
     }
     printf("----------offlinemessage----------\n");
     if (js.contains("offlinemessage")) {
+
         std::vector<std::string> offlinemessage = js["offlinemessage"];
         for (std::string &msg : offlinemessage) {
-            std::cout << msg << std::endl;
             json offjs = json::parse(msg);
             printf("%s:%s:%s\n", offjs["time"].dump().c_str(), offjs["name"].dump().c_str(), offjs["msg"].dump().c_str());
         }
@@ -215,7 +234,7 @@ void oneChat() {
     std::cin.get();
     std::getline(std::cin, msg);
     json js;
-    js["msgid"] = 5;
+    js["msgid"] = ONE_CHAT;
     js["toid"] = toId;
     js["id"] = g_currentUser.getId();
     js["name"] = g_currentUser.getName();
@@ -229,8 +248,8 @@ void addFriend() {
     std::cin >> toId;
     std::cin.get();
     json js;
-    js["msgid"] = 6;
-    js["toid"] = toId;
+    js["msgid"] = ADD_FRI;
+    js["friendid"] = toId;
     js["id"] = g_currentUser.getId();
     js["name"] = g_currentUser.getName();
     js["time"] = Timestamp::now().toFormattedString();
@@ -242,7 +261,7 @@ void createGroup() {
     std::getline(std::cin, groupName);
     std::getline(std::cin, groupDesc);
     json js;
-    js["msgid"] = 7;
+    js["msgid"] = CREATE_GROUP;
     js["id"] = g_currentUser.getId();
     js["time"] = Timestamp::now().toFormattedString();
     js["groupname"] = groupName;
@@ -251,28 +270,43 @@ void createGroup() {
 }
 
 void joinGroup() {
-    int toId;
-    std::cin >> toId;
+    int groupid;
+    std::cin >> groupid;
     std::cin.get();
     json js;
-    js["msgid"] = 8;
-    js["toid"] = toId;
+    js["msgid"] = JOIN_GROUP;
+    js["groupid"] = groupid;
     js["id"] = g_currentUser.getId();
     send(js);
 }
 
 void chatGroup() {
-    int toId;
-    std::cin >> toId;
+    int groupid;
+    std::cin >> groupid;
     std::cin.get();
     std::string msg;
     std::getline(std::cin, msg);
     json js;
-    js["msgid"] = 9;
-    js["toId"] = toId;
+    js["time"] = Timestamp::now().toFormattedString();
+    js["msgid"] = GROUP_CHAT;
+    js["groupid"] = groupid;
     js["id"] = g_currentUser.getId();
     js["name"] = g_currentUser.getName();
     js["msg"] = msg;
+    send(js);
+}
+
+void showFriend() {
+    json js;
+    js["msgid"] = SHOW_FRI;
+    js["id"] = g_currentUser.getId();
+    send(js);
+}
+
+void showGroup() {
+    json js;
+    js["msgid"] = SHOW_GRO;
+    js["id"] = g_currentUser.getId();
     send(js);
 }
 
@@ -287,6 +321,7 @@ void send(json &js) {
 void readFun() {
     char buf[1024] = {0};
     while (true) {
+        memset(buf, 0, sizeof(buf));
         int len = ::recv(clientfd, buf, sizeof(buf), 0);
         if (len == -1) {
             std::cerr << "recv message failed\n";
@@ -294,6 +329,60 @@ void readFun() {
         }
         std::string msg = buf;
         json js = json::parse(msg);
-        printf("%s:%s:%s\n", js["time"].dump().c_str(), js["name"].dump().c_str(), js["msg"].dump().c_str());
+        int msgid = js["msgid"];
+        switch (msgid) {
+            case LOGIN_ACK:
+                logjs = js;
+                cond.notify_one();
+                break;
+            case CHAT_ACK:
+                chat(js);
+                break;
+            case SHOW_FRI_ACK:
+                showfriend(js);
+                break;
+            case SHOW_GRO_ACK:
+                showgroup(js);
+                break;
+            case REGIS_ACK:
+                showregis(js);
+                break;
+            default:
+                std::cout << "error msgid" << std::endl;
+                break;
+        }
     }
+}
+
+
+void showregis(json &js) {
+    printf("hre\n");
+    int id = js["id"];
+    printf("Your id is %d\n", id);
+}
+
+void chat(json &js) {
+    printf("%s:", js["time"].dump().c_str());
+    if (js.contains("groupname"))
+        printf("%s:", js["groupname:"].dump().c_str());
+    printf("%s:%s\n", js["name"].dump().c_str(), js["msg"].dump().c_str());
+    printf("-------------------\n");
+}
+
+void showfriend(json &js) {
+    std::vector<std::string> friends = js["friend"];
+    for (auto fri : friends) {
+        json js = json::parse(fri);
+        printf("%s:%s:%s\n", js["id"].dump().c_str(), js["name"].dump().c_str(), js["state"].dump().c_str());
+    }
+    printf("-------------------\n");
+}
+
+void showgroup(json &js) {
+    std::vector<std::string> groups = js["group"];
+    for (auto group : groups) {
+        json js = json::parse(group);
+        printf("%s:%s:%s\n", js["groupid"].dump().c_str(), js["groupname"].dump().c_str(), js["groupdesc"].dump().c_str());
+    }
+    printf("-------------------\n");
 }

@@ -27,7 +27,9 @@ class ChatService {
         void addFriend(const TcpConnectionPtr &conn, json &js, Timestamp time);
         void createGroup(const TcpConnectionPtr &conn, json &js, Timestamp time);
         void joinGroup(const TcpConnectionPtr &conn, json &js, Timestamp time);
-        void groupChat(const TcpConnectionPtr &conn, json &js, Timestamp time);;
+        void groupChat(const TcpConnectionPtr &conn, json &js, Timestamp time);
+        void showFriend(const TcpConnectionPtr &conn, json &js, Timestamp time);
+        void showGroup(const TcpConnectionPtr &conn, json &js, Timestamp time);
         void clientCloseException(const TcpConnectionPtr &conn);
         void resetState();
         MessageHandler getHandler(int msgId);

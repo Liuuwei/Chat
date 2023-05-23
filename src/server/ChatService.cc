@@ -21,6 +21,8 @@ ChatService::ChatService() {
     messageHandlerMap_.insert({CREATE_GROUP, std::bind(&ChatService::createGroup, this, _1, _2, _3)});
     messageHandlerMap_.insert({JOIN_GROUP, std::bind(&ChatService::joinGroup, this, _1, _2, _3)});
     messageHandlerMap_.insert({GROUP_CHAT, std::bind(&ChatService::groupChat, this, _1, _2, _3)});
+    messageHandlerMap_.insert({SHOW_FRI, std::bind(&ChatService::showFriend, this, _1, _2, _3)});
+    messageHandlerMap_.insert({SHOW_GRO, std::bind(&ChatService::showGroup, this, _1, _2, _3)});
 }
 
 MessageHandler ChatService::getHandler(int msgId) {
@@ -65,7 +67,6 @@ void ChatService::login(const TcpConnectionPtr &conn, json &js, Timestamp time) 
 
             if (msgVec.size()) {
                 response["offlinemessage"] = msgVec;
-                std::cout << response.dump() << std::endl;
                 offlineMessageModel_.remove(id);
             }
             std::vector<std::string> userVec2;
@@ -119,6 +120,7 @@ void ChatService::regis(const TcpConnectionPtr &conn, json &js, Timestamp time) 
 
 void ChatService::oneChat(const TcpConnectionPtr &conn, json &js, Timestamp time) {
     int toId = js["toid"].get<int>();
+    js["msgid"] = CHAT_ACK;
     {
         std::lock_guard lock(connMutex_);
         auto it = userConnectionMap_.find(toId);
@@ -148,13 +150,14 @@ void ChatService::createGroup(const TcpConnectionPtr &conn, json &js, Timestamp 
 
 void ChatService::joinGroup(const TcpConnectionPtr &conn, json &js, Timestamp time) {
     int userId = js["id"];
-    int groupId = js["groupId"];
+    int groupId = js["groupid"];
     groupModel_.joinGroup(userId, groupId, "normal");
 }
 
 void ChatService::groupChat(const TcpConnectionPtr &conn, json &js, Timestamp time) {
     int userId = js["id"];
     int groupId = js["groupid"];
+    js["msgid"] = CHAT_ACK;
     std::vector<int> groupUser = groupModel_.queryGroupUsers(userId, groupId);
     
     std::lock_guard lock(connMutex_);
@@ -166,6 +169,40 @@ void ChatService::groupChat(const TcpConnectionPtr &conn, json &js, Timestamp ti
             offlineMessageModel_.insert(id, js.dump());
         }
     }
+}
+
+void ChatService::showFriend(const TcpConnectionPtr &conn, json &js, Timestamp time) {
+    int userid = js["id"];
+    std::vector<User> Users = friendModel_.query(userid);
+    std::vector<std::string> useVec;
+    for (auto &user : Users) {
+        json js;
+        js["id"] = user.getId();
+        js["name"] = user.getName();
+        js["state"] = user.getState();
+        useVec.push_back(js.dump());
+    }
+    json response;
+    response["msgid"] = SHOW_FRI_ACK;
+    response["friend"] = useVec;
+    conn->send(response.dump());
+}
+
+void ChatService::showGroup(const TcpConnectionPtr &conn, json &js, Timestamp time) {
+    int userid = js["id"];
+    std::vector<Group> groups = groupModel_.queryGroups(userid);
+    std::vector<std::string> groupVec;
+    for (auto &group : groups) {
+        json js;
+        js["groupid"] = group.getId();
+        js["groupname"] = group.getName();
+        js["groupdesc"] = group.getDesc();
+        groupVec.push_back(js.dump());
+    }
+    json response;
+    response["msgid"] = SHOW_GRO_ACK;
+    response["group"] = groupVec;
+    conn->send(response.dump());
 }
 
 void ChatService::clientCloseException(const TcpConnectionPtr &conn) {

@@ -1,0 +1,3 @@
+20230523 00:24:06.367175Z 85801 INFO  TcpServer::newConnection [ChatServer] - new connection [ChatServer-0.0.0.0:9999#1] from 10.211.55.3:54170 - TcpServer.cc:80
+{"friend":["{\"id\":2,\"name\":\"qiyu\",\"state\":\"offline\"}"],"msgid":12}
+20230523 00:24:13.377262Z 85801 INFO  TcpServer::removeConnectionInLoop [ChatServer] - connection ChatServer-0.0.0.0:9999#1 - TcpServer.cc:109

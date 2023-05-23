@@ -395,7 +395,11 @@ src/client/CMakeFiles/ChatClient.dir/main.cc.o: ../src/client/main.cc \
   /usr/include/asm-generic/sockios.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h \
   /usr/include/aarch64-linux-gnu/bits/in.h \
+  /usr/include/c++/11/condition_variable \
+  /usr/include/c++/11/bits/std_mutex.h \
+  /usr/include/c++/11/bits/unique_lock.h \
   /usr/include/c++/11/iostream \
+  /usr/include/c++/11/mutex \
   /usr/include/c++/11/thread \
   /usr/include/c++/11/bits/std_thread.h \
   /usr/include/c++/11/bits/this_thread_sleep.h
@@ -420,6 +424,8 @@ src/client/CMakeFiles/ChatClient.dir/main.cc.o: ../src/client/main.cc \
 /usr/include/boost/core/addressof.hpp:
 
 /usr/include/boost/detail/workaround.hpp:
+
+/usr/include/c++/11/mutex:
 
 /usr/include/boost/config/detail/posix_features.hpp:
 
@@ -510,6 +516,8 @@ src/client/CMakeFiles/ChatClient.dir/main.cc.o: ../src/client/main.cc \
 /usr/include/c++/11/bits/parse_numbers.h:
 
 /usr/include/c++/11/thread:
+
+/usr/include/c++/11/condition_variable:
 
 /usr/include/c++/11/ratio:
 
@@ -703,6 +711,8 @@ src/client/CMakeFiles/ChatClient.dir/main.cc.o: ../src/client/main.cc \
 
 /usr/include/aarch64-linux-gnu/bits/pthreadtypes-arch.h:
 
+/usr/include/c++/11/bits/unique_lock.h:
+
 /usr/include/c++/11/bits/uses_allocator.h:
 
 /usr/include/aarch64-linux-gnu/bits/types/struct_timespec.h:
@@ -730,6 +740,8 @@ src/client/CMakeFiles/ChatClient.dir/main.cc.o: ../src/client/main.cc \
 /usr/include/c++/11/bits/stl_iterator_base_types.h:
 
 /usr/include/c++/11/bit:
+
+/usr/include/c++/11/bits/std_mutex.h:
 
 /usr/include/c++/11/tr1/poly_laguerre.tcc:
 
