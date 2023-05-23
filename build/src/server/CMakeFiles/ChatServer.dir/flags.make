@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/parallels/video/chat/include -I/home/parallels/video/chat/include/server -I/home/parallels/video/chat/include/server/db -I/home/parallels/video/chat/include/server/model -I/home/parallels/video/chat/thirdparty
+CXX_INCLUDES = -I/home/parallels/video/chat/include -I/home/parallels/video/chat/include/server -I/home/parallels/video/chat/include/server/db -I/home/parallels/video/chat/include/server/model -I/home/parallels/video/chat/include/server/redis -I/home/parallels/video/chat/thirdparty
 
 CXX_FLAGS = -g
 

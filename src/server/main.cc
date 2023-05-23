@@ -6,13 +6,14 @@
 
 void sigHandler(int sig) {
     ChatService::instance()->resetState();
+    ChatService::instance()->resetRedis();
     exit(0);
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     signal(SIGINT, sigHandler);
     EventLoop loop;
-    InetAddress addr(9999);
+    InetAddress addr(atoi(argv[1]));
     ChatServer server(&loop, addr, "ChatServer");
     server.start();
     loop.loop();

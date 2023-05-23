@@ -70,10 +70,10 @@ std::unordered_map<std::string, std::function<void()>> funMap {
 };
 
 
-int main() {
+int main(int argc, char *argv[]) {
 
     const char *ip = "10.211.55.3";
-    int port = 9999;
+    int port = atoi(argv[1]);
     sockaddr_in addr;
     bzero(&addr, sizeof(addr));
     addr.sin_port = htons(port);
@@ -356,7 +356,6 @@ void readFun() {
 
 
 void showregis(json &js) {
-    printf("hre\n");
     int id = js["id"];
     printf("Your id is %d\n", id);
 }
@@ -365,7 +364,7 @@ void chat(json &js) {
     printf("%s:", js["time"].dump().c_str());
     if (js.contains("groupname"))
         printf("%s:", js["groupname:"].dump().c_str());
-    printf("%s:%s\n", js["name"].dump().c_str(), js["msg"].dump().c_str());
+    printf("%s:%s:%s\n", js["id"].dump().c_str(), js["name"].dump().c_str(), js["msg"].dump().c_str());
     printf("-------------------\n");
 }
 

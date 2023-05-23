@@ -164,20 +164,29 @@ src/server/CMakeFiles/ChatServer.dir/ChatService.cc.o: \
  /usr/include/c++/11/backward/auto_ptr.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /home/parallels/video/chat/thirdparty/json.hpp \
- /usr/include/c++/11/algorithm /usr/include/c++/11/bits/stl_algo.h \
- /usr/include/c++/11/bits/algorithmfwd.h \
- /usr/include/c++/11/bits/stl_heap.h \
- /usr/include/c++/11/bits/uniform_int_dist.h \
- /usr/include/c++/11/pstl/glue_algorithm_defs.h \
+ /home/parallels/video/chat/include/server/redis/Redis.h \
+ /usr/local/include/hiredis/hiredis.h /usr/local/include/hiredis/read.h \
+ /usr/include/aarch64-linux-gnu/sys/time.h \
+ /usr/local/include/hiredis/sds.h /usr/local/include/hiredis/alloc.h \
+ /usr/include/c++/11/thread /usr/include/c++/11/bits/std_thread.h \
+ /usr/include/c++/11/bits/this_thread_sleep.h /usr/include/c++/11/chrono \
+ /usr/include/c++/11/ratio /usr/include/c++/11/limits \
+ /usr/include/c++/11/ctime /usr/include/c++/11/bits/parse_numbers.h \
  /usr/include/c++/11/functional /usr/include/c++/11/bits/std_function.h \
  /usr/include/c++/11/unordered_map /usr/include/c++/11/bits/hashtable.h \
  /usr/include/c++/11/bits/hashtable_policy.h \
  /usr/include/c++/11/bits/enable_special_members.h \
  /usr/include/c++/11/bits/node_handle.h \
  /usr/include/c++/11/bits/unordered_map.h \
- /usr/include/c++/11/bits/erase_if.h /usr/include/c++/11/cstddef \
- /usr/include/c++/11/iterator /usr/include/c++/11/bits/stream_iterator.h \
+ /usr/include/c++/11/bits/erase_if.h /usr/include/c++/11/bits/stl_algo.h \
+ /usr/include/c++/11/bits/algorithmfwd.h \
+ /usr/include/c++/11/bits/stl_heap.h \
+ /usr/include/c++/11/bits/uniform_int_dist.h \
+ /home/parallels/video/chat/thirdparty/json.hpp \
+ /usr/include/c++/11/algorithm \
+ /usr/include/c++/11/pstl/glue_algorithm_defs.h \
+ /usr/include/c++/11/cstddef /usr/include/c++/11/iterator \
+ /usr/include/c++/11/bits/stream_iterator.h \
  /usr/include/c++/11/bits/streambuf_iterator.h \
  /usr/include/c++/11/streambuf /usr/include/c++/11/bits/ios_base.h \
  /usr/include/c++/11/bits/locale_classes.h \
@@ -202,8 +211,7 @@ src/server/CMakeFiles/ChatServer.dir/ChatService.cc.o: \
  /usr/include/aarch64-linux-gnu/bits/mathcalls.h \
  /usr/include/aarch64-linux-gnu/bits/mathcalls-narrow.h \
  /usr/include/aarch64-linux-gnu/bits/iscanonical.h \
- /usr/include/c++/11/bits/specfun.h /usr/include/c++/11/limits \
- /usr/include/c++/11/tr1/gamma.tcc \
+ /usr/include/c++/11/bits/specfun.h /usr/include/c++/11/tr1/gamma.tcc \
  /usr/include/c++/11/tr1/special_function_util.h \
  /usr/include/c++/11/tr1/bessel_function.tcc \
  /usr/include/c++/11/tr1/beta_function.tcc \
@@ -244,8 +252,6 @@ src/server/CMakeFiles/ChatServer.dir/ChatService.cc.o: \
  /usr/include/nlohmann/detail/meta/identity_tag.hpp \
  /usr/include/nlohmann/detail/meta/std_fs.hpp \
  /usr/include/c++/11/filesystem /usr/include/c++/11/bits/fs_fwd.h \
- /usr/include/c++/11/chrono /usr/include/c++/11/ratio \
- /usr/include/c++/11/ctime /usr/include/c++/11/bits/parse_numbers.h \
  /usr/include/c++/11/bits/fs_path.h /usr/include/c++/11/locale \
  /usr/include/c++/11/bits/locale_facets.h /usr/include/c++/11/cwctype \
  /usr/include/wctype.h /usr/include/aarch64-linux-gnu/bits/wctype-wchar.h \

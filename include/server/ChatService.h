@@ -4,6 +4,7 @@
 #include "GroupModel.h"
 #include "FriendModel.h"
 #include "UserModel.h"
+#include "Redis.h"
 #include "json.hpp"
 
 #include <muduo/net/TcpConnection.h>
@@ -31,10 +32,13 @@ class ChatService {
         void showFriend(const TcpConnectionPtr &conn, json &js, Timestamp time);
         void showGroup(const TcpConnectionPtr &conn, json &js, Timestamp time);
         void clientCloseException(const TcpConnectionPtr &conn);
+        void handleRedisSubscribeMessage(int ,const std::string&);
         void resetState();
+        void resetRedis();
         MessageHandler getHandler(int msgId);
     private:
         ChatService();
+        Redis redis_;
         UserModel userModel_;
         FriendModel friendModel_;
         GroupModel groupModel_;

@@ -268,6 +268,14 @@ src/server/CMakeFiles/ChatServer.dir/main.cc.o: \
  /home/parallels/video/chat/include/server/model/User.h \
  /home/parallels/video/chat/include/server/model/FriendModel.h \
  /home/parallels/video/chat/include/server/model/UserModel.h \
+ /home/parallels/video/chat/include/server/redis/Redis.h \
+ /usr/local/include/hiredis/hiredis.h /usr/local/include/hiredis/read.h \
+ /usr/include/aarch64-linux-gnu/sys/time.h \
+ /usr/local/include/hiredis/sds.h /usr/local/include/hiredis/alloc.h \
+ /usr/include/c++/11/thread /usr/include/c++/11/bits/std_thread.h \
+ /usr/include/c++/11/bits/this_thread_sleep.h /usr/include/c++/11/chrono \
+ /usr/include/c++/11/ratio /usr/include/c++/11/limits \
+ /usr/include/c++/11/ctime /usr/include/c++/11/bits/parse_numbers.h \
  /home/parallels/video/chat/thirdparty/json.hpp \
  /usr/include/nlohmann/adl_serializer.hpp \
  /usr/include/nlohmann/detail/abi_macros.hpp \
@@ -284,8 +292,7 @@ src/server/CMakeFiles/ChatServer.dir/main.cc.o: \
  /usr/include/aarch64-linux-gnu/bits/mathcalls.h \
  /usr/include/aarch64-linux-gnu/bits/mathcalls-narrow.h \
  /usr/include/aarch64-linux-gnu/bits/iscanonical.h \
- /usr/include/c++/11/bits/specfun.h /usr/include/c++/11/limits \
- /usr/include/c++/11/tr1/gamma.tcc \
+ /usr/include/c++/11/bits/specfun.h /usr/include/c++/11/tr1/gamma.tcc \
  /usr/include/c++/11/tr1/special_function_util.h \
  /usr/include/c++/11/tr1/bessel_function.tcc \
  /usr/include/c++/11/tr1/beta_function.tcc \
@@ -325,8 +332,6 @@ src/server/CMakeFiles/ChatServer.dir/main.cc.o: \
  /usr/include/nlohmann/detail/meta/identity_tag.hpp \
  /usr/include/nlohmann/detail/meta/std_fs.hpp \
  /usr/include/c++/11/filesystem /usr/include/c++/11/bits/fs_fwd.h \
- /usr/include/c++/11/chrono /usr/include/c++/11/ratio \
- /usr/include/c++/11/ctime /usr/include/c++/11/bits/parse_numbers.h \
  /usr/include/c++/11/bits/fs_path.h /usr/include/c++/11/locale \
  /usr/include/c++/11/bits/locale_facets.h /usr/include/c++/11/cwctype \
  /usr/include/wctype.h /usr/include/aarch64-linux-gnu/bits/wctype-wchar.h \
@@ -396,7 +401,6 @@ src/server/CMakeFiles/ChatServer.dir/main.cc.o: \
  /usr/include/aarch64-linux-gnu/bits/types/stack_t.h \
  /usr/include/aarch64-linux-gnu/sys/ucontext.h \
  /usr/include/aarch64-linux-gnu/sys/procfs.h \
- /usr/include/aarch64-linux-gnu/sys/time.h \
  /usr/include/aarch64-linux-gnu/sys/user.h \
  /usr/include/aarch64-linux-gnu/bits/procfs.h \
  /usr/include/aarch64-linux-gnu/bits/procfs-id.h \

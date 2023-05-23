@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 
+using namespace std::placeholders;
 using namespace muduo;
 
 ChatService* ChatService::instance() {
@@ -23,6 +24,10 @@ ChatService::ChatService() {
     messageHandlerMap_.insert({GROUP_CHAT, std::bind(&ChatService::groupChat, this, _1, _2, _3)});
     messageHandlerMap_.insert({SHOW_FRI, std::bind(&ChatService::showFriend, this, _1, _2, _3)});
     messageHandlerMap_.insert({SHOW_GRO, std::bind(&ChatService::showGroup, this, _1, _2, _3)});
+
+    if (redis_.connect()) {
+        redis_.init_notify_handler(std::bind(&ChatService::handleRedisSubscribeMessage, this, _1, _2));
+    }
 }
 
 MessageHandler ChatService::getHandler(int msgId) {
@@ -53,6 +58,8 @@ void ChatService::login(const TcpConnectionPtr &conn, json &js, Timestamp time) 
                 std::lock_guard lock(connMutex_);
                 userConnectionMap_.insert({user.getId(), conn});
             }
+            redis_.subscribe(id);
+
             response["errno"] = 0;
             // * 更新状态信息
             response["id"] = id;
@@ -127,7 +134,12 @@ void ChatService::oneChat(const TcpConnectionPtr &conn, json &js, Timestamp time
         if (it != userConnectionMap_.end()) { // * to is online
             it->second->send(js.dump());
         } else {
-            offlineMessageModel_.insert(toId, js.dump()); // * save offline message
+            User user = userModel_.query(toId);
+            if (user.getState() == "online") {
+                redis_.publish(toId, js.dump());
+            } else {
+                offlineMessageModel_.insert(toId, js.dump()); // * save offline message
+            }
         }
     }
 }
@@ -166,7 +178,12 @@ void ChatService::groupChat(const TcpConnectionPtr &conn, json &js, Timestamp ti
         if (it != userConnectionMap_.end()) {
             it->second->send(js.dump());
         } else {
-            offlineMessageModel_.insert(id, js.dump());
+            User user = userModel_.query(id);
+            if (user.getState() == "online") {
+                redis_.publish(id, js.dump());
+            } else {
+                offlineMessageModel_.insert(id, js.dump());
+            }
         }
     }
 }
@@ -218,10 +235,29 @@ void ChatService::clientCloseException(const TcpConnectionPtr &conn) {
             }
         }
     }
-    if (user.getId() != -1)
+    if (user.getId() != -1) {
+        redis_.unsubscribe(user.getId());
         userModel_.updateState(user);
+    }
 }
 
 void ChatService::resetState() {
     userModel_.resetState();
+}
+
+void ChatService::resetRedis() {
+    std::lock_guard lock(connMutex_);
+    for (auto it : userConnectionMap_) {
+        redis_.unsubscribe(it.first);
+    }
+}
+
+void ChatService::handleRedisSubscribeMessage(int channel, const std::string &message) {
+    std::lock_guard lock(connMutex_);
+    auto it = userConnectionMap_.find(channel);
+    if (it != userConnectionMap_.end()) {
+        it->second->send(message);
+        return ;
+    }
+    offlineMessageModel_.insert(channel, message);
 }

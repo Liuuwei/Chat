@@ -18,6 +18,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/parallels/video/chat/src/server/model/GroupUser.cc" "src/server/CMakeFiles/ChatServer.dir/model/GroupUser.cc.o" "gcc" "src/server/CMakeFiles/ChatServer.dir/model/GroupUser.cc.o.d"
   "/home/parallels/video/chat/src/server/model/OfflineMessageModel.cc" "src/server/CMakeFiles/ChatServer.dir/model/OfflineMessageModel.cc.o" "gcc" "src/server/CMakeFiles/ChatServer.dir/model/OfflineMessageModel.cc.o.d"
   "/home/parallels/video/chat/src/server/model/UserModel.cc" "src/server/CMakeFiles/ChatServer.dir/model/UserModel.cc.o" "gcc" "src/server/CMakeFiles/ChatServer.dir/model/UserModel.cc.o.d"
+  "/home/parallels/video/chat/src/server/redis/Redis.cc" "src/server/CMakeFiles/ChatServer.dir/redis/Redis.cc.o" "gcc" "src/server/CMakeFiles/ChatServer.dir/redis/Redis.cc.o.d"
   )
 
 # Targets to which this target links.

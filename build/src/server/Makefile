@@ -370,6 +370,30 @@ model/UserModel.cc.s:
 	cd /home/parallels/video/chat/build && $(MAKE) $(MAKESILENT) -f src/server/CMakeFiles/ChatServer.dir/build.make src/server/CMakeFiles/ChatServer.dir/model/UserModel.cc.s
 .PHONY : model/UserModel.cc.s
 
+redis/Redis.o: redis/Redis.cc.o
+.PHONY : redis/Redis.o
+
+# target to build an object file
+redis/Redis.cc.o:
+	cd /home/parallels/video/chat/build && $(MAKE) $(MAKESILENT) -f src/server/CMakeFiles/ChatServer.dir/build.make src/server/CMakeFiles/ChatServer.dir/redis/Redis.cc.o
+.PHONY : redis/Redis.cc.o
+
+redis/Redis.i: redis/Redis.cc.i
+.PHONY : redis/Redis.i
+
+# target to preprocess a source file
+redis/Redis.cc.i:
+	cd /home/parallels/video/chat/build && $(MAKE) $(MAKESILENT) -f src/server/CMakeFiles/ChatServer.dir/build.make src/server/CMakeFiles/ChatServer.dir/redis/Redis.cc.i
+.PHONY : redis/Redis.cc.i
+
+redis/Redis.s: redis/Redis.cc.s
+.PHONY : redis/Redis.s
+
+# target to generate assembly for a file
+redis/Redis.cc.s:
+	cd /home/parallels/video/chat/build && $(MAKE) $(MAKESILENT) -f src/server/CMakeFiles/ChatServer.dir/build.make src/server/CMakeFiles/ChatServer.dir/redis/Redis.cc.s
+.PHONY : redis/Redis.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -409,6 +433,9 @@ help:
 	@echo "... model/UserModel.o"
 	@echo "... model/UserModel.i"
 	@echo "... model/UserModel.s"
+	@echo "... redis/Redis.o"
+	@echo "... redis/Redis.i"
+	@echo "... redis/Redis.s"
 .PHONY : help
 
 
